@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload an Image for Processing</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="image" accept="image/*" required>
+            <button type="submit" id="submit-btn">Upload</button>
+        </form>
+
+        {% if uploaded_image %}
+        <div class="result">
+            <h2>Uploaded Image:</h2>
+            <img src="{{ url_for('uploaded_file', filename=uploaded_image) }}" alt="Uploaded Image" width="300">
+            <h2>Result:</h2>
+            <p>{{ result }}</p>
+        </div>
+        {% endif %}
+
+        <div id="loading" class="loading" style="display: none;">
+            <img src="/static/loading.gif" alt="Processing...">
+            <p>Processing your image...</p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.querySelector('form');
+        const loadingDiv = document.getElementById('loading');
+        const submitBtn = document.getElementById('submit-btn');
+
+        form.addEventListener('submit', function() {
+            loadingDiv.style.display = 'block';
+            submitBtn.disabled = true;
+        });
+    </script>
+</body>
+</html>
+
